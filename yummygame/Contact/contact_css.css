@@ -1,0 +1,154 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: 'Slate';
+    src: url('/FontsFree-Net-Balboa-W01-Bold.ttf');
+}
+
+/* -------------------contact modal css classes--------------------- */
+
+.contact-modal{
+    opacity: 1;
+}
+
+.back-btn{
+    position: absolute;
+    border: none;
+    outline: none;
+    background: none;
+    width: 10vw;
+    top: 60px;
+    opacity: 0;
+    transition: all .6s ease-in-out;
+    cursor: pointer;
+}
+
+.close-btn{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    overflow: hidden;
+    border: none;
+    background: url("./images/close-btn.svg") no-repeat center center;
+    text-indent: 200%;
+    color: transparent;
+    outline: none;
+    z-index: 100;
+    cursor: pointer;
+}
+
+/* left wing css classes */
+
+.left-wing{
+    max-width: 50vw;
+    transform: none;
+    transition: all .4s cubic-bezier(.74,0,.2,1);
+}
+
+.left-wing .text{
+    height: 100vh;
+}
+
+@media screen and (max-height: 800px) {
+    .left-wing .text {
+        padding: 80px;
+    }
+}
+
+.text-header{
+    font-family: Slate,Helvetica,Arial,sans-serif!important;
+    font-size: 76px;
+    color: #3c424f;
+    line-height: 80px;
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.left-wing .p{
+    color: #686b77;
+    font-size: 19px;
+    line-height: 32px;
+    max-width: 560px;
+    font-weight: 400;
+}
+
+.left-wing .text-body{
+    margin-bottom: 72px;
+}
+
+.text-footer-header{
+    font-size: 28px;
+    font-family: Slate,Helvetica,Arial,sans-serif!important;
+    color: #3c424f;
+    line-height: 32px;
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+
+.text-footer-social{
+    margin-top: 16px;
+}
+
+.text-footer-social a{
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: Slate,Helvetica,Arial,sans-serif!important;
+    transition: all .25s ease-in-out;
+}
+
+.map{
+    background-image: url("./images/map@2x.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    height: 620px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+}
+
+/* right wing css classes */
+
+.right-wing{
+    position: absolute;
+    right: 0;
+    width: 90vw;
+    height: 100%;
+    background-color: #58c7ff;
+    overflow: hidden auto;
+    transition: all .4s cubic-bezier(.74,0,.2,1);
+}
+
+/* -------------------util css classes--------------------- */
+
+.overlay{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: #fff;
+}
+
+.underlay{
+    z-index: -1;
+}
