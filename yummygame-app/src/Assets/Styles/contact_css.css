@@ -1,0 +1,318 @@
+/* -------------------global css initializations--------------------- */
+
+* {
+    font-family: Slate, Helvetica, Arial, sans-serif !important;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* -------------------contact modal css classes--------------------- */
+
+.contact-modal {
+    opacity: 1;
+    width: 100vw;
+    height: 100vh;
+    background: #2eaff0;
+}
+
+.back-btn {
+    position: absolute;
+    border: none;
+    outline: none;
+    background: none;
+    width: 10vw;
+    top: 60px;
+    opacity: 0;
+    transition: all .6s ease-in-out;
+    cursor: pointer;
+}
+
+.close-btn {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    overflow: hidden;
+    border: none;
+    background: url("../Images/close-btn.svg") no-repeat center center;
+    text-indent: 200%;
+    color: transparent;
+    outline: none;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.contact-mother {
+    max-width: 100% !important;
+    display: flex;
+    flex-direction: row;
+}
+
+/* left wing css classes */
+
+.left-wing {
+    max-width: 50vw;
+    transform: none;
+    transition: all .4s cubic-bezier(.74, 0, .2, 1);
+    flex: 1;
+}
+
+.left-wing .text, .right-wing .text {
+    height: 100vh;
+    justify-content: flex-start;
+    padding: 104px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-height: 800px) {
+    .left-wing .text, .right-wing .text {
+        padding: 80px;
+    }
+}
+
+.text-header {
+    font-size: 76px;
+    color: #3c424f;
+    line-height: 80px;
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.left-wing p, .right-wing p {
+    font-size: 20px;
+    color: #686b77;
+    line-height: 34px;
+    top: 1px;
+}
+
+.left-wing a .emoji {
+    top: 3px;
+    margin-left: 5px;
+}
+
+.left-wing .text-body, .right-wing .text-body {
+    margin-bottom: 72px;
+}
+
+.text-footer-header {
+    font-size: 28px;
+    color: #3c424f;
+    line-height: 32px;
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+
+.text-footer-social {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.text-footer-social a {
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: inherit;
+    line-height: inherit;
+    transition: all .25s ease-in-out;
+}
+
+.map {
+    background-image: url("../Images/map@2x.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    height: 750px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+}
+
+/* right wing css classes */
+
+.right-wing {
+    position: absolute;
+    right: 0;
+    width: 90vw;
+    height: 100vh;
+    background-color: #58c7ff;
+    overflow: hidden auto;
+    transition: all .4s cubic-bezier(.74, 0, .2, 1);
+    transform: translate3d(40vw, 0, 0);
+    will-change: transform, opacity;
+}
+
+.right-wing .landing-screen {
+    transition: all .6s cubic-bezier(.74, 0, .2, 1);
+    opacity: 1;
+}
+
+.right-wing .text-body {
+    max-width: 560px;
+    color: #ffffff;
+}
+
+.right-wing .text-body a.link-animation {
+    padding: 0 2px;
+    line-height: 1.6;
+    outline: none;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+}
+
+.right-wing .text-body a.link-animation:after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    transform: translate3d(0, 0, 0);
+    transition: all .4s;
+    transition-timing-function: cubic-bezier(.7, 0, .3, 1);
+    border-radius: 2px;
+    z-index: -1;
+    background: rgba(255, 255, 255, .5);
+}
+
+.right-wing .link-animation span {
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.right-wing .link-animation svg {
+    margin-left: 8px;
+}
+
+.right-wing .feedback-info-header {
+    color: #fff;
+    margin-bottom: 24px;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 400;
+}
+
+.right-wing .feedback-radio-wrapper {
+    margin-bottom: 32px;
+}
+
+.right-wing .feedback-radio {
+    font-size: 20px;
+    color: #fff;
+}
+
+.right-wing .feedback-radio label {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 8px 0;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.right-wing input[type=radio].white {
+    width: 21px;
+    height: 21px;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 2px rgb(255 255 255 / 50%);
+    background: none no-repeat 50%;
+    transition: all .15s ease;
+    border-radius: 50%;
+    margin: 0 12px 0 0;
+    vertical-align: -4px;
+}
+
+.right-wing input[type=radio].white:hover {
+    box-shadow: inset 0 0 0 3px rgb(255 255 255);
+}
+
+.right-wing input[type=radio].white:checked, input[type=checkbox].white:checked {
+    background: #fff url(./../Images/checkmark.svg) no-repeat 50%;
+    box-shadow: none;
+    transition: all .15s ease;
+}
+
+.right-wing button.next{
+    display: inline-block;
+    padding: 12px 32px;
+    font-size: 18px;
+    font-family: Slate W01 Medium,Helvetica,Arial,sans-serif!important;
+    line-height: 1 !important;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+    color: white;
+    background-color: transparent;
+    font-weight: 400;
+}
+
+.right-wing button.next:hover, .right-wing button.next:focus{
+    background-color: white !important;
+    color: #58c7ff !important;
+    box-shadow: none !important;
+    border: 2px solid white !important;
+}
+
+.feedback-triangle{
+    height: 80vh;
+    width: 100%;
+    background-image: linear-gradient(-180deg,rgba(45,174,240,.5) 0,rgba(45,174,240,0) 95%);
+    position: absolute;
+    bottom: 0;
+    transform: skewY(-6deg);
+    opacity: 0;
+    transition: all .5s ease-in-out;
+    pointer-events: none;
+}
+
+/* -------------------util css classes--------------------- */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: #fff;
+}
+
+.underlay {
+    z-index: -1;
+}
+
+.link.white {
+    color: #fff;
+}
+
+.btn.btn-white {
+    border-color: #fff;
+    color: rgba(255, 255, 255, .75);
+    background-color: transparent;
+}
