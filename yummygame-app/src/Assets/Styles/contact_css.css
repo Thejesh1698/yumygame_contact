@@ -13,7 +13,7 @@ html, body, #root {
     height: 100%;
 }
 
-a {
+a, a:hover {
     text-decoration: none;
 }
 
@@ -33,7 +33,7 @@ ul {
 .back-btn {
     position: absolute;
     border: none;
-    outline: none;
+    outline: none !important;
     background: none;
     width: 10vw;
     top: 60px;
@@ -53,7 +53,7 @@ ul {
     background: url("../Images/close-btn.svg") no-repeat center center;
     text-indent: 200%;
     color: transparent;
-    outline: none;
+    outline: none !important;
     z-index: 100;
     cursor: pointer;
 }
@@ -71,6 +71,11 @@ ul {
     transform: none;
     transition: all .4s cubic-bezier(.74, 0, .2, 1);
     flex: 1;
+}
+
+.left-wing.compressed{
+    transition: all .4s cubic-bezier(.74,0,.2,1);
+    transform: translateX(-40vw);
 }
 
 .left-wing .text, .right-wing .text {
@@ -145,6 +150,18 @@ ul {
     z-index: -1;
 }
 
+.text-footer-social a.twitter path:hover{
+    fill: #08a0e9;
+}
+
+.text-footer-social a.instagram path:hover{
+    fill: mediumslateblue;
+}
+.text-footer-social a.medium path:hover{
+    fill: green;
+}
+
+
 /* right wing css classes */
 
 .right-wing {
@@ -157,6 +174,20 @@ ul {
     transition: all .4s cubic-bezier(.74, 0, .2, 1);
     transform: translate3d(40vw, 0, 0);
     will-change: transform, opacity;
+}
+
+.right-wing .text{
+    transition: all .6s cubic-bezier(.74,0,.2,1);
+}
+
+.right-wing.expanded{
+    transition: transform .4s cubic-bezier(.74,0,.2,1);
+    transform: translate3d(0,0,0);
+    will-change: transform,opacity;
+}
+
+.right-wing .text.opacity0{
+    transition: all .6s cubic-bezier(.74,0,.2,1);
 }
 
 .right-wing .landing-screen {
@@ -195,6 +226,12 @@ ul {
     background: rgba(255, 255, 255, .5);
 }
 
+.right-wing .text-body a.link-animation.white:hover:after {
+    height: 100%;
+    background: rgba(255,255,255,.25);
+    border-radius: 4px;
+}
+
 .right-wing .link-animation span {
     display: block;
     position: relative;
@@ -213,25 +250,26 @@ ul {
     font-weight: 400;
 }
 
-.right-wing .feedback-radio-wrapper {
+.right-wing .feedback-radio-wrapper, .right-wing .feedback-checkbox-wrapper {
     margin-bottom: 32px;
 }
 
-.right-wing .feedback-radio {
+.right-wing .feedback-radio, .right-wing .feedback-checkbox {
     font-size: 20px;
     color: #fff;
 }
 
-.right-wing .feedback-radio label {
+.right-wing .feedback-radio label, .right-wing .feedback-checkbox label {
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding: 8px 0;
+    padding: 0 0 8px 0;
     display: block;
     cursor: pointer;
     overflow: hidden;
+    margin-bottom: 0;
 }
 
-.right-wing input[type=radio].white {
+.right-wing input[type=radio].white, .right-wing input[type=checkbox].white {
     width: 21px;
     height: 21px;
     appearance: none;
@@ -245,7 +283,11 @@ ul {
     vertical-align: -4px;
 }
 
-.right-wing input[type=radio].white:hover {
+.right-wing input[type=checkbox].white{
+    border-radius: 5px;
+}
+
+.right-wing input[type=radio].white:hover, .right-wing input[type=checkbox].white:hover {
     box-shadow: inset 0 0 0 3px rgb(255 255 255);
 }
 
@@ -279,6 +321,19 @@ ul {
     border: 2px solid white !important;
 }
 
+.right-wing button.next:disabled{
+    cursor: not-allowed;
+}
+
+input[type=email].error, input[type=text].error, input[type=url].error, textarea.error {
+    transition: all .25s ease-in-out;
+    background-size: 20px 20px !important;
+    background: rgba(225, 57, 93, .6) url(./../Images/sad@2x.png) no-repeat calc(100% - 20px) 20px;
+    border-color: rgba(225,57,93,.8);
+}
+
+/* feedback form css classes */
+
 .feedback-triangle{
     height: 80vh;
     width: 100%;
@@ -289,6 +344,138 @@ ul {
     opacity: 0;
     transition: all .5s ease-in-out;
     pointer-events: none;
+}
+
+.feedback-form-screen{
+    width: 90vw;
+    height: 100vh;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    padding: 80px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    will-change: transform;
+    transition: all .6s cubic-bezier(.74,0,.2,1);
+    -webkit-transform: translateX(10%);
+}
+
+.feedback-form-screen.opacity1{
+    -webkit-transform: none;
+}
+
+.feedback-form-header{
+    padding: 0 0 100px 0;
+}
+
+.feedback-form-header h2{
+    color: #fff;
+    font-size: 76px;
+    line-height: 80px;
+    margin-bottom: 16px;
+}
+
+.feedback-form-body{
+    display: flex;
+}
+
+.feedback-form-left{
+    max-width: 300px;
+    width: 100%;
+}
+
+.feedback-form-right{
+    flex-grow: 1;
+}
+
+.feedback-form-title{
+    color: #fff;
+    margin-bottom: 24px;
+    font-size: 28px;
+    line-height: 32px;
+}
+
+.feedback-form-userinfo{
+    display: flex;
+}
+
+.feedback-form-userinfo .inputs-div{
+    max-width: calc(50% - 24px);
+    width: 100%;
+    margin-bottom: 24px;
+    margin-right: 48px;
+}
+
+input[type=email], input[type=text], input[type=url], textarea {
+    transition: all .25s ease-in-out;
+    background-color: rgba(38,169,234,.5);
+    color: #fff;
+    border: none;
+    width: 100%;
+    outline: none;
+    padding: 16px 20px;
+    font: inherit;
+    line-height: 1.6;
+    border-radius: 2px;
+    background-image: url(./../Images/placeholder@2x.png);
+    background-size: 20px 20px;
+    background-position: calc(100% - 20px) 22px;
+    background-repeat: no-repeat;
+    margin-bottom: 24px;
+}
+
+textarea {
+    height: 100%;
+    resize: none;
+}
+
+input[type=email]::placeholder, input[type=text]::placeholder, input[type=url]::placeholder, textarea::placeholder {
+    color: #fff;
+    opacity: 50%;
+}
+
+input[type=email]:focus, input[type=text]:focus, input[type=url]:focus, textarea:focus {
+    transition: all .25s ease-in-out;
+    background-color: #26a9ea;
+    border: none;
+}
+
+.textarea-div{
+    flex-grow: 1;
+    height: 328px;
+    margin-bottom: 24px;
+}
+
+.feedback-form-screen button {
+    float: right;
+}
+
+.radio-area-header, .checkbox-area-header{
+    color: #fff;
+    margin-bottom: 24px;
+    font-size: 28px;
+    line-height: 32px;
+}
+
+.submit-message{
+    display: inline-block;
+    float: right;
+    padding: 12px 32px;
+    font-size: 18px;
+    font-family: Slate W01 Medium,Helvetica,Arial,sans-serif!important;
+    line-height: 1 !important;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: transparent;
+    font-weight: 400;
+    opacity: 0;
+    transition: all .25s ease-in-out;
+}
+.submit-message.show{
+    opacity: 1;
+    transition: all .25s ease-in-out;
 }
 
 /* -------------------util css classes--------------------- */
@@ -315,4 +502,12 @@ ul {
     border-color: #fff;
     color: rgba(255, 255, 255, .75);
     background-color: transparent;
+}
+
+.opacity0{
+    opacity: 0 !important;
+}
+
+.opacity1{
+    opacity: 1 !important;
 }

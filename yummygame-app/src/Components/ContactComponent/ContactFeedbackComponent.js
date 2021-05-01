@@ -1,16 +1,20 @@
-import React, {} from "react";
+import React from "react";
+import ContactFeedbackForm from "./ContactFeedbackForm";
 
-function ContactFeedbackComponent() {
+function ContactFeedbackComponent(props) {
+
     return (
         <>
-            <button className="back-btn">
+            <button className={"back-btn " + (props.feedBackOption ? "opacity1" : "")} onClick={() => {
+                props.setFeedBackOption(null);
+            }}>
                 <svg xmlns="https://www.w3.org/2000/svg" width="23" height="18" viewBox="0 0 23 18">
                     <path fill="#5C5F6E" fillRule="evenodd"
                           d="M21.7131495,8.30441922 L22.8392418,8.86746538 L21.7176501,9.42826122 L21.8216762,9.53228733 L14.0757875,17.278176 C13.4779181,17.8760455 12.5128049,17.8802703 11.9108381,17.2783035 C11.313039,16.6805044 11.3156571,15.7086626 11.9109656,15.113354 L16.6568542,10.3674654 L1.49116761,10.3674654 C0.667618478,10.3674654 0,9.70166814 0,8.86746538 C0,8.03903825 0.67145511,7.36746538 1.49116761,7.36746538 L16.6636052,7.36746538 L11.9109656,2.61482579 C11.3156571,2.01951728 11.313039,1.04767543 11.9108381,0.449876354 C12.5128049,-0.152090468 13.4779181,-0.147865648 14.0757875,0.450003834 L21.8216762,8.1958925 L21.7131495,8.30441922 Z"/>
                 </svg>
             </button>
-            <div className="right-wing">
-                <div className="text">
+            <div className={"right-wing "+ (props.feedBackOption ? "expanded" : "")}>
+                <div className={"text " + (props.feedBackOption ? "opacity0" : "")}>
                     <div className="text-header">Let’s talk.</div>
                     <p className="text-body">Share your excitement with us.<br/>
                         <a className="link link-animation white" id="contact" href="mailto:info@yummygum.com">
@@ -29,36 +33,40 @@ function ContactFeedbackComponent() {
                             <ul>
                                 <li className="feedback-radio">
                                     <label>
-                                        <input type="radio" name="reason" value="Your great project" className="white"/>Your
+                                        <input id="your-project" type="radio" name="reason" value="Your great project" className="white"/>Your
                                         great project
                                     </label>
                                 </li>
                                 <li className="feedback-radio">
                                     <label>
                                         <input type="radio" name="reason" id="meeting-coffee"
-                                               value="Meeting for a coffee"
                                                className="white"/>Meeting for a coffee
                                     </label>
                                 </li>
                                 <li className="feedback-radio">
                                     <label>
-                                        <input type="radio" name="reason" id="birds-bees" value="Birds and bees"
+                                        <input type="radio" name="reason" id="birds-bees"
                                                className="white"/>Birds and bees
                                     </label>
                                 </li>
                                 <li className="feedback-radio">
                                     <label>
                                         <input type="radio" name="reason" id="video-call"
-                                               value="Plan a video call"
                                                className="white"/>Plan a video call
                                     </label>
                                 </li>
                             </ul>
                         </div>
-                        <button type="button" className="next btn btn-primary btn-white" id="next-form">Next</button>
+                        <button type="button" className="next btn btn-primary btn-white" id="next-form" onClick={() => {
+                            let selected_node = document.querySelector('input[name="reason"]:checked');
+                            props.setFeedBackOption(selected_node?.id);
+                        }}>Next
+                        </button>
+
                     </div>
                 </div>
-                <div className="feedback-triangle"/>
+                <div className={"feedback-triangle " + (props.feedBackOption ? "opacity1" : "")}/>
+                <ContactFeedbackForm feedBackOption={props.feedBackOption}/>
             </div>
         </>
     );
