@@ -4,7 +4,7 @@ package com.product.task.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Product {
@@ -22,18 +22,18 @@ public class Product {
     private Double interestRate;
 
     @Column(name = "StartDate")
-    private String startDate;
+    private Date startDate;
 
     @Column(name = "MaturityDate")
-    private String maturityDate;
+    private Date maturityDate;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             mappedBy = "product")
-    private List<Price> priceHistory;
+        private List<Price> priceHistory;
 
 
-    public Product(Long productId, String productName, Double interestRate, String startDate, String maturityDate) {
+    public Product(Long productId, String productName, Double interestRate, Date startDate, Date maturityDate) {
         this.productId = productId;
         this.productName = productName;
         this.interestRate = interestRate;
@@ -68,19 +68,19 @@ public class Product {
         this.interestRate = interestRate;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getMaturityDate() {
+    public Date getMaturityDate() {
         return maturityDate;
     }
 
-    public void setMaturityDate(String maturityDate) {
+    public void setMaturityDate(Date maturityDate) {
         this.maturityDate = maturityDate;
     }
 }

@@ -4,7 +4,7 @@ package com.product.task.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="PriceHistory")
@@ -21,7 +21,7 @@ public class Price {
     private Product product;
 
     @Column(name = "HistoryDate")
-    private String historyDate;
+    private Date historyDate;
 
     @Column(name = "DayPrice")
     private Double dayPrice;
@@ -45,11 +45,11 @@ public class Price {
         this.product = product;
     }
 
-    public String getHistoryDate() {
+    public Date getHistoryDate() {
         return historyDate;
     }
 
-    public void setHistoryDate(String historyDate) {
+    public void setHistoryDate(Date historyDate) {
         this.historyDate = historyDate;
     }
 
