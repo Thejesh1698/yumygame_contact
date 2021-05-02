@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
@@ -18,6 +19,7 @@ import com.product.task.models.Price;
 import com.product.task.models.Product;
 import com.product.task.services.ProductPriceService;
 
+@Component
 public class ExcelHelper {
 
     @Autowired
@@ -63,11 +65,14 @@ public class ExcelHelper {
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = cellsInRow.next();
+                    if(String.valueOf(currentCell) == ""){
+                        continue;
+                    }
 
                     switch (cellIdx) {
                         case 0:
                             try{
-                                price.setHistoryDate(new SimpleDateFormat("dd-MM-yyyy").parse(currentCell.getStringCellValue()));
+                                price.setHistoryDate(new SimpleDateFormat("dd-MMM-yyyy").parse(String.valueOf(currentCell)));
                             }
                             catch(Exception e){
                                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "date format "+ currentCell.getStringCellValue() +" is wrong! ");
@@ -75,11 +80,15 @@ public class ExcelHelper {
                             break;
 
                         case 1:
-                            price.setDayPrice(Double.parseDouble(currentCell.getStringCellValue()));
+                            price.setDayPrice(Double.parseDouble(String.valueOf(currentCell)));
                             break;
 
                         case 2:
-                            long product_id = Long.parseLong(currentCell.getStringCellValue());
+                            String local_id = String.valueOf(currentCell);
+                            if(local_id.indexOf(".") != -1){
+                                local_id = local_id.substring(0, local_id.indexOf("."));
+                            }
+                            long product_id = Long.parseLong(local_id);
                             Product current_product = null;
                             if(product_cache.containsKey(product_id)){
                                 current_product = product_cache.get(product_id);
@@ -91,6 +100,7 @@ public class ExcelHelper {
                                     product_cache.put(product_id, current_product);
                                 }
                                 else{
+                                    System.out.println("product id not available");
                                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "product id "+ String.valueOf(product_id) +" does not exits ");
                                 }
 
@@ -105,13 +115,16 @@ public class ExcelHelper {
                     cellIdx++;
                 }
 
-                price_list.add(price);
+                if(price.getProduct() != null){
+                    price_list.add(price);
+                }
             }
 
             workbook.close();
 
             return price_list;
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "fail to parse Excel file: " + e.getMessage());
         }
     }

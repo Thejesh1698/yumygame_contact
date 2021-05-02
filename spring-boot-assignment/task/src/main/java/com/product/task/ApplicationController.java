@@ -1,4 +1,5 @@
 package com.product.task;
+
 import com.product.task.models.Product;
 import com.product.task.models.Price;
 import com.product.task.services.ProductPriceService;
@@ -15,28 +16,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
 
 @RestController
-public class ApplicationController{
+public class ApplicationController {
 
     @Autowired
-    ProductPriceService productPriceService;
+    private ProductPriceService productPriceService;
+    @Autowired
+    private ExcelHelper excelHelper;
 
-//    @PostMapping("/")
-//    public ResponseEntity<?> api(){
-//        HashMap<String, String> hm = new HashMap<String, String>();
-//        hm.put("hehe", "hi");
-//        hm.put("lmao","good");
-//        return new ResponseEntity<>(hm, HttpStatus.OK);
-//    }
+    @PostMapping("/add_product_data")
+    public String addProductData() {
+        List<Product> product_list = new ArrayList<Product>();
+        try{
+            product_list.add(new Product(Long.parseLong("1"), "product one", Double.parseDouble("100"), new SimpleDateFormat("dd-MMM-yyyy").parse("03-MAY-2021"), new SimpleDateFormat("dd-MMM-yyyy").parse("15-JUN-2021")));
+            product_list.add(new Product(Long.parseLong("2"), "GrowFix Gold Dec", Double.parseDouble("11"), new SimpleDateFormat("dd-MMM-yyyy").parse("04-MAY-2021"), new SimpleDateFormat("dd-MMM-yyyy").parse("17-JUN-2022")));
+            product_list.add(new Product(Long.parseLong("3"), "GrowFix Wheels Mar", Double.parseDouble("10.25"), new SimpleDateFormat("dd-MMM-yyyy").parse("05-MAY-2021"), new SimpleDateFormat("dd-MMM-yyyy").parse("03-MAR-2023")));
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        productPriceService.saveProducts(product_list);
+        return "products created!!";
+    }
+
 
     @PostMapping("/api_one")
-    public String apiOne(@RequestParam("file") MultipartFile file){
-        ExcelHelper excelHelper = new ExcelHelper();
+    public String apiOne(@RequestParam("file") MultipartFile file) {
         if (excelHelper.hasExcelFormat(file)) {
             productPriceService.savePriceList(file);
         }
@@ -44,40 +53,45 @@ public class ApplicationController{
     }
 
     @PostMapping("/api_two")
-    public String apiTwo(@RequestBody Map<String, Object> payLoad){
+    public Map<String, String> apiTwo(@RequestBody Map<String, Object> payLoad) {
         String query_date_string, bad_request = "";
         Date query_date = new Date();
         long product_id = 0;
-        try{
+        try {
             bad_request = "Query date ";
-            query_date_string = (String)payLoad.get("query_date");
-            query_date = new SimpleDateFormat("dd-MM-yyyy").parse(query_date_string);
+            query_date_string = (String) payLoad.get("query_date");
+            query_date = new SimpleDateFormat("dd-MMM-yyyy").parse(query_date_string);
 
             bad_request = "Product id ";
-            product_id = Long.parseLong((String)payLoad.get("product_id"));
-        }
-        catch(Exception e){
+            product_id = Long.parseLong((String) payLoad.get("product_id"));
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, bad_request + "is not in proper format");
         }
 
         Optional<Product> optional_product = productPriceService.getByProductId(product_id);
-        if(optional_product.isPresent()){
-            Product product_obj = optional_product.get();  // retrieve name and interest from this
-            Price price_obj = productPriceService.getPriceByProductAndDate(product_obj, query_date);  // retrieve price from this
+        if (optional_product.isPresent()) {
+            Product product_obj = optional_product.get();
+            Price price_obj = productPriceService.getPriceByProductAndDate(product_obj, query_date);
+            if(price_obj == null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Price Object doesn't exist");
+            }
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("name", product_obj.getProductName());
+            result.put("interest rate", product_obj.getInterestRate().toString());
+            result.put("price", price_obj.getDayPrice().toString());
+
+            return result;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product id doesn't exist");
         }
-        else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product id doesn't exist");
-        }
-        return "apiTwo";
     }
 
     @RequestMapping("/api_three/{product_id}")
-    public String apiThree(@PathVariable String product_id){
+    public List<Price> apiThree(@PathVariable String product_id) {
         long productId = 0;
-        try{
+        try {
             productId = Long.parseLong(product_id);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product Id is not in proper format");
         }
 
@@ -86,12 +100,11 @@ public class ApplicationController{
         cal.setTime(current_date);
         cal.add(Calendar.DATE, 3);
         Date future_date = cal.getTime();
-        try{
+        try {
             List<Price> price_list = productPriceService.findByProductIdBetweenDates(productId, current_date, future_date);
-        }
-        catch(Exception e){
+            return price_list;
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "fail to parse Excel file: " + e.getMessage());
         }
-        return "apiThree";
     }
 }

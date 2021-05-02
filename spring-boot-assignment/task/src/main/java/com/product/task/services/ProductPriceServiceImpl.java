@@ -24,6 +24,9 @@ public class ProductPriceServiceImpl implements ProductPriceService{
     @Autowired
     private PriceRepository priceRepository;
 
+    @Autowired
+    private ExcelHelper excelHelper;
+
 
     @Override
     public Optional<Product> getByProductId(Long productId) {
@@ -39,14 +42,13 @@ public class ProductPriceServiceImpl implements ProductPriceService{
     public List<Price> findByProductIdBetweenDates(Long productId, Date from_date, Date to_date) {
         Optional<Product> product_obj = productRepository.findById(productId);
         if(product_obj.isPresent()){
-            return priceRepository.findByProductAndHistoryDateLessThanEqualAndHistoryDateGreaterThanEqual(product_obj.get(), from_date, to_date);
+            return priceRepository.findByProductAndHistoryDateGreaterThanAndHistoryDateLessThanEqual(product_obj.get(), from_date, to_date);
         }
         return new ArrayList<Price>();
     }
 
     @Override
     public void savePriceList(MultipartFile file) {
-        ExcelHelper excelHelper = new ExcelHelper();
         try{
             List<Price> price_list = excelHelper.excelToPriceHistory(file.getInputStream());
             priceRepository.saveAll(price_list);
@@ -56,28 +58,9 @@ public class ProductPriceServiceImpl implements ProductPriceService{
         }
     }
 
-//
-//    @Override
-//    public void saveCart(Cart cart) {
-//        cartRepository.save(cart);
-//    }
-//
-//    @Override
-//    public void deleteCart(Cart cart) {
-//        cartRepository.delete(cart);
-//    }
-//
-
-//
-//    @Override
-//    public void deleteWishList(WishList wishList) {
-//        wishListRepository.delete(wishList);
-//    }
-//
-//    @Override
-//    public WishList getWishlistByUser(User user) {
-//        return wishListRepository.findByUser(user);
-//    }
-//
+    @Override
+    public void saveProducts(List<Product> product_list) {
+        productRepository.saveAll(product_list);
+    }
 
 }

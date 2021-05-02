@@ -10,6 +10,7 @@ public interface ProductPriceService {
 
     // Product SERVICES
     Optional<Product> getByProductId(Long productId);
+    void saveProducts(List<Product> product_list);
 
 
     // Price SERVICES

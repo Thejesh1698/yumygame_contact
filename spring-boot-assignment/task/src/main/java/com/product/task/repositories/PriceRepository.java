@@ -7,5 +7,5 @@ import java.util.*;
 
 public interface PriceRepository extends JpaRepository<Price, Long> {
     Price findByProductAndHistoryDate(Product product, Date historyDate);
-    List<Price> findByProductAndHistoryDateLessThanEqualAndHistoryDateGreaterThanEqual(Product product, Date from_date, Date to_date);
+    List<Price> findByProductAndHistoryDateGreaterThanAndHistoryDateLessThanEqual(Product product, Date from_date, Date to_date);
 }
