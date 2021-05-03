@@ -93,18 +93,26 @@ ul {
 }
 
 .text-header {
-    font-size: 76px;
+    font-size: 65px;
     color: #3c424f;
     line-height: 80px;
     margin-bottom: 16px;
-    font-weight: 400;
+    font-weight: 1000;
+}
+
+.right-wing .text-header{
+    color: #fff;
 }
 
 .left-wing p, .right-wing p {
-    font-size: 20px;
+    font-size: 17px;
     color: #686b77;
     line-height: 34px;
     top: 1px;
+}
+
+.left-wing p{
+    margin-bottom: var(--baseline);
 }
 
 .left-wing a .emoji {
@@ -201,6 +209,8 @@ ul {
 }
 
 .right-wing .text-body a.link-animation {
+    font-weight: 900;
+    font-size: 18px;
     padding: 0 2px;
     line-height: 1.6;
     outline: none;
@@ -371,9 +381,12 @@ input[type=email].error, input[type=text].error, input[type=url].error, textarea
 
 .feedback-form-header h2{
     color: #fff;
-    font-size: 76px;
+    font-size: 65px;
     line-height: 80px;
     margin-bottom: 16px;
+    margin-top: 28px;
+    margin-left: 18px;
+    font-weight: 1000;
 }
 
 .feedback-form-body{
