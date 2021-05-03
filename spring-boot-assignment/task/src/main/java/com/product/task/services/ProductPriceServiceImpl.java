@@ -44,7 +44,9 @@ public class ProductPriceServiceImpl implements ProductPriceService{
         if(product_obj.isPresent()){
             return priceRepository.findByProductAndHistoryDateGreaterThanAndHistoryDateLessThanEqual(product_obj.get(), from_date, to_date);
         }
-        return new ArrayList<Price>();
+        else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find given product id");
+        }
     }
 
     @Override

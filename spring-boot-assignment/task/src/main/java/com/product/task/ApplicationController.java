@@ -104,7 +104,7 @@ public class ApplicationController {
             List<Price> price_list = productPriceService.findByProductIdBetweenDates(productId, current_date, future_date);
             return price_list;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "fail to parse Excel file: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find given product id");
         }
     }
 }

@@ -38,7 +38,7 @@ public class Product {
         this.productName = productName;
         this.interestRate = interestRate;
         this.startDate = startDate;
-        this.maturityDate = this.maturityDate;
+        this.maturityDate = maturityDate;
     }
 
     public Product() {
